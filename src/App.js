@@ -4,7 +4,7 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
-import ParticlesBg from 'particles-bg'
+import Particles from './components/Particle/Particles'
 import './App.css'; 
 
 class App extends Component {
@@ -57,8 +57,7 @@ class App extends Component {
 	render() {
 		return (
 			<div className='App'>
-				{/* <ParticlesBg color="#E4EAEF" num={300} type="cobweb" bg={true} /> */}
-				<ParticlesBg type='circle' bg={true} />
+				<Particles />
 				<Navigation />
 				<Logo />
 				<Rank />
