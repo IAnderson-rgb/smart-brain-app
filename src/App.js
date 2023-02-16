@@ -17,16 +17,30 @@ class App extends Component {
 		};
 	}
 
+	// calculateFaceLocation = (data) => {
+	// 	const faceBoundingBox =data.outputs[0].data.regions[0].region_info.bounding_box
+	// 	const image = document.getElementById('inputimage');
+	// 	const width = Number(image.width);
+	// 	const height = Number(image.height);
+	// 	console.log('Data',faceBoundingBox);
+	// 	return{
+	// 		leftCol: faceBoundingBox.left_col * width,
+	// 		topRow: faceBoundingBox.top_row * height,
+	// 		rightCol: width - (faceBoundingBox.right_col * width),
+	// 		bottomRow: height + (faceBoundingBox.bottom_row * height)
+	// 	}
+	// }
+
 	calculateFaceLocation = (data) => {
 		const faceBoundingBox =data.outputs[0].data.regions[0].region_info.bounding_box
 		const image = document.getElementById('inputimage');
 		const width = Number(image.width);
 		const height = Number(image.height);
 		return{
-			leftCol: faceBoundingBox.left_col * width,
-			topRow: faceBoundingBox.top_row * height,
-			rightCol: width - (faceBoundingBox.right_col * width),
-			bottomRow: height + (faceBoundingBox.bottom_row * height)
+			topRow: faceBoundingBox.top_row * width,
+			leftCol: faceBoundingBox.left_col * height,
+			bottomRow: height - (faceBoundingBox.bottom_row * height),
+			rightCol: width - (faceBoundingBox.right_col * width)
 		}
 	}
 
@@ -42,14 +56,15 @@ class App extends Component {
 	onButtonSubmit = () => {
 		this.setState({imageUrl: this.state.input});
 		const MODEL_ID = 'face-detection';
-		// const MODEL_VERSION_ID = 'aa7f35c01e0642fda5cf400f543e7c40';
+		const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105';
 		const IMAGE_URL = this.state.input;
+		// const IMAGE_BYTES_STRING = this.state.input;
 		const raw = JSON.stringify({
-			inputs: [
+			"inputs": [
 				{
-					data: {
-						image: {
-							url: IMAGE_URL,
+					"data": {
+						"image": {
+							"url": IMAGE_URL
 						},
 					},
 				},
@@ -59,13 +74,17 @@ class App extends Component {
 		const requestOptions = {
 			method: 'POST',
 			headers: {
-				Accept: 'application/json',
-				Authorization: 'Key ' + 'c30c2fb50a9a45d08978d7e69a4457a9',
+				'Accept': 'application/json',
+				'Authorization': 'Key c30c2fb50a9a45d08978d7e69a4457a9',
 			},
 			body: raw,
 		};
 
-		fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/outputs", requestOptions)
+		fetch("https://api.clarifai.com/v2/models/" 
+				 + MODEL_ID 
+				 + "/versions/" 
+				 + MODEL_VERSION_ID 
+				 + "/outputs", requestOptions)
         .then(response => response.json())
         .then(result => this.displayFaceBox(this.calculateFaceLocation(result)))
 				// .then(modelData => console.log('ModelData',modelData.outputs[0].data.regions[0].region_info.bounding_box
