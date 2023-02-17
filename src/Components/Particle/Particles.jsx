@@ -41,7 +41,7 @@ function Particle() {
 					shape: {
 						type: 'square',
 						options: {
-              preset: "triangles",
+              preset: "circles",
 							sides: 5,
 						},
 					},
@@ -56,11 +56,11 @@ function Particle() {
 						},
 					},
 					size: {
-						value: 4,
+						value: 3,
 						random: false,
 						anim: {
 							enable: false,
-							speed: 40,
+							speed: 1,
 							size_min: 0.1,
 							sync: false,
 						},
@@ -71,13 +71,13 @@ function Particle() {
 						direction: 'clockwise',
 						animation: {
 							enable: true,
-							speed: 5,
+							speed: 1,
 							sync: false,
 						},
 					},
 					line_linked: {
 						enable: true,
-						distance: 250,
+						distance: 100,
 						color: '#ffffff',
 						opacity: 0.2,
 						width: 2,
@@ -91,8 +91,8 @@ function Particle() {
 						out_mode: 'out',
 						attract: {
 							enable: false,
-							rotateX: 600,
-							rotateY: 1200,
+							rotateX: 300,
+							rotateY: 600,
 						},
 					},
 				},
