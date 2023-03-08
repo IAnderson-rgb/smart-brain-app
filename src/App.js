@@ -79,7 +79,7 @@ class App extends Component {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
-				'Authorization': 'Key c30c2fb50a9a45d08978d7e69a4457a9',
+				'Authorization': 'Insert Clarifai key here',
 			},
 			body: raw,
 		};
