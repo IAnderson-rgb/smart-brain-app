@@ -79,7 +79,7 @@ class App extends Component {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
-				'Authorization': 'Insert Clarifai key here',
+				'Authorization': `Key ${process.env.CLARIFAI_API_KEY}`,
 			},
 			body: raw,
 		};
