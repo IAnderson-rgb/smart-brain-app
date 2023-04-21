@@ -21,22 +21,9 @@ class App extends Component {
 		};
 	}
 
-	// calculateFaceLocation = (data) => {
-	// 	const faceBoundingBox =data.outputs[0].data.regions[0].region_info.bounding_box
-	// 	const image = document.getElementById('inputimage');
-	// 	const width = Number(image.width);
-	// 	const height = Number(image.height);
-	// 	console.log('Data',faceBoundingBox);
-	// 	return{
-	// 		leftCol: faceBoundingBox.left_col * width,
-	// 		topRow: faceBoundingBox.top_row * height,
-	// 		rightCol: width - (faceBoundingBox.right_col * width),
-	// 		bottomRow: height + (faceBoundingBox.bottom_row * height)
-	// 	}
-	// }
-
 	calculateFaceLocation = (data) => {
 		const faceBoundingBox =data.outputs[0].data.regions[0].region_info.bounding_box
+		//Will need to iterate over array of regions to bound multiple faces.
 		const image = document.getElementById('inputimage');
 		const width = Number(image.width);
 		const height = Number(image.height);
@@ -59,11 +46,15 @@ class App extends Component {
 
 	onButtonSubmit = () => {
 		this.setState({imageUrl: this.state.input});
-		const MODEL_ID = 'face-detection';
-		const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105';
+		const MODEL_ID = 'face-detection-0200';
+		const MODEL_VERSION_ID = '174702155a6043c9932b045e8e00e6e2';
 		const IMAGE_URL = this.state.input;
 		// const IMAGE_BYTES_STRING = this.state.input;
 		const raw = JSON.stringify({
+			"user_app_id": {
+				"user_id": "openvino",
+				"app_id": "face-detection"
+			},
 			"inputs": [
 				{
 					"data": {
@@ -79,7 +70,7 @@ class App extends Component {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
-				'Authorization': `Key ${process.env.CLARIFAI_API_KEY}`,
+				'Authorization': 'Key Your_API_Key',
 			},
 			body: raw,
 		};
@@ -92,7 +83,7 @@ class App extends Component {
         .then(response => response.json())
         .then(result => this.displayFaceBox(this.calculateFaceLocation(result)))
 				// .then(modelData => console.log('ModelData',modelData.outputs[0].data.regions[0].region_info.bounding_box
-					// ))
+				// 	))
         .catch(error => console.log('error', error));
 		};
 

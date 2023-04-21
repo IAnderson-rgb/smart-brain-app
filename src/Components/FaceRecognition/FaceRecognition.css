@@ -8,6 +8,10 @@
   cursor: pointer;
 }
 
+.absolute-container {
+  position: absolute;
+}
+
 .buffer {
   height: 10rem;
 }
