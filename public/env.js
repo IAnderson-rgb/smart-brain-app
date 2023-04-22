@@ -1,0 +1,3 @@
+window.env = {
+  "REACT_APP_CLARIFAI_API_KEY": "c30c2fb50a9a45d08978d7e69a4457a9"
+};
