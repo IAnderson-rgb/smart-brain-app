@@ -22,7 +22,7 @@ class Register extends React.Component {
 		this.setState({ Password: event.target.value });
 	};
 
-	onSubmitSignIn = () => {
+	onSubmitRegistration = () => {
 		fetch('http://192.168.1.220:3000/register', {
 			method: 'post',
 			headers: { 'Content-Type': 'application/json' },
@@ -33,15 +33,15 @@ class Register extends React.Component {
 			}),
 		})
 			.then((res) => res.json())
-			.then((data) => {
-				if (data === 'success') {
+			.then((user) => {
+				if (user) {
+					this.props.loadUser(user);
 					this.props.onRouteChange('home');
 				}
 			});
 	};
 
 	render() {
-		const {onRouteChange} = this.props;
 		return (
 			<article className='br3 ba b--black-10 mv4 w-100 w-50-m w-30-l mw6 shadow-5 center'>
 				<main className='pa4 black-80'>
@@ -87,7 +87,7 @@ class Register extends React.Component {
 						</fieldset>
 						<div className=''>
 							<input
-								onClick={() => onRouteChange('home')}
+								onClick={this.onSubmitRegistration}
 								className='b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib'
 								type='submit'
 								value='Register'

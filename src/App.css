@@ -12,6 +12,19 @@
   pointer-events: none;
 }
 
+.neonText {
+  color: #fff;
+  text-shadow:
+      0 0 7px #fff,
+      0 0 10px #fff,
+      0 0 21px #fff,
+      0 0 20px #0fa,
+      0 0 32px #0fa,
+      0 0 52px #0fa,
+      0 0 92px #0fa,
+      0 0 192px #0fa;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
