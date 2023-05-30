@@ -9,23 +9,25 @@ import Register from './components/Register/Register';
 import Particles from './components/Particle/Particles'
 import './App.css'; 
 
+const initialState = {
+		input: '',
+		imageUrl: '',
+		box: {},
+		route: 'signin',
+		isSignedIn: false,
+		user: {
+			id: '',
+			name: '',
+			email: '',
+			entries: 0,
+			joined: '',
+		},
+	};
+
 class App extends Component {
 	constructor() {
 		super();
-		this.state = {
-			input: '',
-			imageUrl: '',
-			box: {},
-			route: 'signin',
-			isSignedIn: false,
-			user: {
-				id: '',
-				name: '',
-				email: '',
-				entries: 0,
-				joined: '',
-			},
-		};
+		this.state = initialState;
 	}
 
 	loadUser = (data) => {
@@ -56,7 +58,7 @@ class App extends Component {
 	};
 
 	displayFaceBox = (box) => {
-		console.log('Box', box);
+		console.log('Box =', box);
 		this.setState({ box: box });
 	};
 
@@ -66,44 +68,16 @@ class App extends Component {
 
 	onButtonSubmit = () => {
 		this.setState({ imageUrl: this.state.input });
-		const MODEL_ID = 'face-detection';
-		const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105';
-		const IMAGE_URL = this.state.imageUrl;
+		const IMAGE_URL = this.state.input;
 		// const IMAGE_BYTES_STRING = this.state.input;
-		const raw = JSON.stringify({
-			"user_app_id": {
-				"user_id": "clarifai",
-				"app_id": "main"
-			},
-			"inputs": [
-					{
-							"data": {
-									"image": {
-											"url": IMAGE_URL
-									}
-							}
-					}
-			]
-		});
-		
-		const requestOptions = {
-				method: 'POST',
-				headers: {
-						'Accept': 'application/json',
-						'Authorization': 'Key Your_API_Key'
-				},
-				body: raw
-		};
-
-		fetch(
-			'https://api.clarifai.com/v2/models/' +
-				MODEL_ID +
-				'/versions/' +
-				MODEL_VERSION_ID +
-				'/outputs',
-			requestOptions
-		)
-			.then((response) => response.json())
+			fetch('http://192.168.1.220:3000/imageurl', {
+				method: 'post',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					imgLocation: IMAGE_URL,
+				}),
+			})
+			.then((res) => res.json())
 			.then((result) => {
 				if (result) {
 					fetch('http://192.168.1.220:3000/image', {
@@ -116,7 +90,8 @@ class App extends Component {
 						.then((response) => response.json())
 						.then((count) => {
 							this.setState(Object.assign(this.state.user, { entries: count }));
-						});
+						})
+						.catch((error) => console.log('error', error));
 				}
 				this.displayFaceBox(this.calculateFaceLocation(result));
 			})
@@ -127,7 +102,7 @@ class App extends Component {
 
 	onRouteChange = (route) => {
 		if (route === 'signout') {
-			this.setState({ isSignedIn: false });
+			this.setState(initialState);
 			route = 'signin';
 		} else if (route === 'home') {
 			this.setState({ isSignedIn: true });
