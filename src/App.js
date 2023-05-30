@@ -74,7 +74,7 @@ class App extends Component {
 				method: 'post',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					imgaddress: IMAGE_URL,
+					imgLocation: IMAGE_URL,
 				}),
 			})
 			.then((res) => res.json())
