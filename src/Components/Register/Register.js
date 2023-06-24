@@ -23,7 +23,7 @@ class Register extends React.Component {
 	};
 
 	onSubmitRegistration = () => {
-		fetch('https://myface-detect-app-api.onrender.com/register', {
+		fetch(`${process.env.REACT_APP_Base_URL}/register`, {
 			method: 'post',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({

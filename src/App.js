@@ -70,7 +70,7 @@ class App extends Component {
 		this.setState({ imageUrl: this.state.input });
 		const IMAGE_URL = this.state.input;
 		// const IMAGE_BYTES_STRING = this.state.input;
-			fetch('https://myface-detect-app-api.onrender.com/imageurl', {
+			fetch(`${process.env.REACT_APP_Base_URL}/imageurl`, {
 				method: 'post',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -80,7 +80,7 @@ class App extends Component {
 			.then((res) => res.json())
 			.then((result) => {
 				if (result) {
-					fetch('https://myface-detect-app-api.onrender.com/image', {
+					fetch(`${process.env.REACT_APP_Base_URL}/image`, {
 						method: 'put',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify({
