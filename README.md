@@ -1,4 +1,4 @@
-# SmartBrain - v1
+# Magic Brain - v1
 
 1. Clone this repo
 2. Run `npm install`
